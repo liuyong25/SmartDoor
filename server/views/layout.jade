@@ -2,6 +2,71 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="/lib/bootstrap/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/lib/bootstrap/css/bootstrap-responsive.min.css")
+    link(rel='stylesheet', href='/css/style.css')
+
+    - //样式区域
+    block style
+      style
+        body {
+          padding-top:60px;
+        }
+        .navbar .brand{
+          background-image: url('images/logo32.png');
+          float: left;
+          display: block;
+          padding: 8px 20px 12px 60px;
+          margin-left: -20px;
+          font-size: 20px;
+          font-weight: 200;
+          line-height: 1;
+          background-repeat: no-repeat;
+          background-position: 20px;
+        }
+
+  - //定义函数 - 渲染链接
+  mixin renderLink(linkName,linkUrl,linkClass)
+    - var active = req.url==linkUrl?'active':''
+    li(class=[active,linkClass])
+      a(href=linkUrl) #{linkName}
+        block
+
   body
+    - //顶部标题
+    block nav
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container-fluid
+            a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
+              span.icon-bar 
+              span.icon-bar
+              span.icon-bar
+            a.brand(href="#") 
+              strong #{title}
+            .nav-collapse
+              ul.nav
+                +renderLink('首页','/')
+                +renderLink('消息','/chat')
+                  span.badge.badge-warning 2
+              ul.nav.pull-right
+                li.divider-vertical
+                - if (session.userInfo)
+                  li: a(href='/logout') 注销
+                - else
+                  li: a(href='/login') 登录
+    
+    - //内容区域
     block content
+
+    - //脚本区域
+    block js
+      script(src="/lib/jquery-1.7.2.min.js")
+      script(src="/lib/bootstrap/js/bootstrap.min.js")
+      script(src="/js/utils.js")
+
+    //js start
+      script
+        $(window).load(function(){
+
+        });
