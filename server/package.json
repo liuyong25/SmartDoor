@@ -1,0 +1,34 @@
+{
+  "name": "SmartDoor",
+  "version": "0.0.1",
+  "private": true,
+
+  "author": "TZ <atian25@qq.com>",
+  "description": "server monitor/controller",
+  "keywords": ["remote-control"],
+  "homepage": "http://atian25.iteye.com",
+  
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "node-dev app"
+  },
+  "dependencies": {
+    "express": "3.0.0rc1",
+    "jade": "*",
+    "socket.io": ">= 0.9.8"
+  },
+
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "repositories": [
+     {
+        "type": "git", 
+        "url": "https://github.com/atian25/SmartDoor.git"
+     }
+  ]
+}

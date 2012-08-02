@@ -1,0 +1,19 @@
+# <<common ignore items>>
+*.log
+logs/
+test/
+tmp/
+.settings/
+target/
+
+# <<nodejs ignore items>>  
+node_modules/
+
+
+# <<java web ignore items>>  
+/plugin.xml
+web-app/WEB-INF/classes/
+target-eclipse/
+grails-*.zip
+*.war
+.link_to_grails_plugins/
