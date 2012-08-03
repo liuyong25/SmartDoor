@@ -4,10 +4,10 @@
  */
 
 //import Module dependencies.
-process.env.NODE_PATH = '../node_modules-'
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var validator = require('express-validator');
 var config = require('./config').config;
 
 //set up express & configure && middleware 
@@ -19,25 +19,33 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
+
+//params
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser(config['cookie_secret']));
-app.use(express.session());
+app.use(validator);
+
+//session & cookie
+var sessionStore = new express.session.MemoryStore({reapInterval: 60000 * 10});
+app.use(express.cookieParser());
+app.use(express.session({
+  store: sessionStore,
+  key: 'sid',
+  secret: config['session_secret']
+}));
+
+app.use(express.csrf());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //provide helper functions/variable to views
-app.locals({
-  title: config['title'],
-});
 app.use(function(req, res, next){
-  res.locals.req = function(req,res) {
-    return req;
-  };
-  res.locals.session = function(req,res) {
-    return req.session;
-  };
+  res.locals.title = config['title']
+  res.locals.csrf = req.session ? req.session._csrf : '';
+  res.locals.req = req;
+  res.locals.session = req.session;
   next();
 });
+app.use(require('./controllers/auth').checkLogin);
 app.use(app.router); //note: this must before errorHandler & after session.
 
 
@@ -58,9 +66,17 @@ switch(app.get('env')){
 //routes & url mapping
 require('./routes')(app);
 
-//start http server
-http.createServer(app).listen(app.get('port'), function(){
+//start http server && socket.io
+var server = http.createServer(app);
+var io = require('socket.io').listen(server,{
+  'log level': 2,
+  'browser client minification': true
+});
+var chatServer = require('./controllers/chat').init(io, app, sessionStore);
+
+server.listen(app.get('port'), function(){
   console.log("%s listening on port %d in %s mode", config.name, app.get('port'), app.settings.env);
   console.log("God bless love....");
-  console.log("You can visit your app with http://localhost:%d", app.get('port'));
+  console.log("You can visit your app with http://localhost:%d", app.get('port'));  
 });
+

@@ -1,4 +1,4 @@
-:: Git Config   http://zengrong.net/post/1249.htm
+:: Git Config   http://zengrong.net/post/1249.htm && https://github.com/nvie/gitflow/
 git config --global user.name "TZ"
 git config --global user.email atian25@qq.com
 git config --global core.quotepath false
