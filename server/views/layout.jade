@@ -6,7 +6,7 @@ html
     link(rel="stylesheet", href="/lib/bootstrap/css/bootstrap-responsive.min.css")
     link(rel='stylesheet', href='/css/style.css')
 
-    - //样式区域
+    //样式区域
     block style
       style
         body {
@@ -25,7 +25,7 @@ html
           background-position: 20px;
         }
 
-  - //定义函数 - 渲染链接
+  //- 定义函数 - 渲染链接
   mixin renderLink(linkName,linkUrl,linkClass)
     - var active = req.url==linkUrl?'active':''
     li(class=[active,linkClass])
@@ -33,7 +33,7 @@ html
         block
 
   body
-    - //顶部标题
+    //顶部标题
     block nav
       .navbar.navbar-fixed-top
         .navbar-inner
@@ -51,15 +51,16 @@ html
                   span.badge.badge-warning 2
               ul.nav.pull-right
                 li.divider-vertical
-                - if (session.userInfo)
+                - if (session.user)
+                  li: a #{session.user.username}
                   li: a(href='/logout') 注销
                 - else
                   li: a(href='/login') 登录
     
-    - //内容区域
+    //内容区域
     block content
 
-    - //脚本区域
+    //脚本区域
     block js
       script(src="/lib/jquery-1.7.2.min.js")
       script(src="/lib/bootstrap/js/bootstrap.min.js")

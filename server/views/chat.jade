@@ -1,0 +1,61 @@
+extends layout
+
+block append style
+  style
+    #msglist{
+      height: 300px !important; 
+      overflow-y: auto; 
+      font-family: Courier, "Courier New", monospace, 微软雅黑;
+      font-size: 12px;
+      line-height: 30px;
+    }
+    #userlist{
+      min-height: 300px !important; 
+    }
+    .message-holder{
+    }
+    .message-text{
+       text-indent : 10px;
+    }
+    .message-type-system .message-header{
+      font-weight: bold;
+      color: red;
+    }
+    .message-type-error .message-header{
+      font-weight: bold;
+      color: red;
+    }
+    .message-type-talk .message-header{
+      font-weight: bold;
+    }
+    .message-type-whisper .message-header{
+      font-weight: bold;
+      color: blue;
+    }
+
+block append content
+  .container-fluid.chatroom
+    //在线列表区域
+    .row-fluid
+      .span2
+        .ul.nav.nav-list.well#userlist(data-spy="scroll")
+          li.nav-header 当前在线(0人)
+
+      //消息内容区域
+      .span9
+        .well#msglist(data-spy="scroll")
+          //具体消息
+
+        //发送消息区域
+        .row-fluid
+          .form.well.form-inline
+            input#chat-input.input-xxlarge(
+              type="text",
+              data-provide="typeahead",
+              data-source="[]"
+            )
+            button#chat-send.btn.btn-primary 发送
+
+block append js
+  script(src="/socket.io/socket.io.js")
+  script(src='/js/chat.js')

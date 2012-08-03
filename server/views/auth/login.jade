@@ -1,0 +1,31 @@
+extends ../layout
+
+block append content
+  .container
+    form.form-horizontal.well(action="/login",method="post")
+      .fieldset
+        - if(locals.error)
+          .control-group
+              .alert.alert-error 
+                a.close(data-dismiss="alert",href="#") &times;
+                span.label.label-info 错误提示
+                strong &nbsp;&nbsp;#{error}
+
+        .control-group
+          label.control-label(for="username") 帐号：
+          .controls
+            input(type="text",class="input-xlarge",name="username",placeholder="请输入帐号/手机/Email")
+
+        .control-group
+          label.control-label(for="password") 密码：
+          .controls
+            input(type="password",class="input-xlarge",name="password")
+
+        input(type="hidden",name="_csrf",value="#{csrf}")
+
+        .form-actions
+          button.btn.btn-primary(type="submit") 
+            i.icon-user.icon-white
+            &nbsp;登录
+          span &nbsp;&nbsp;
+          button.btn 忘记密码

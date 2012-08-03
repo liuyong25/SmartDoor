@@ -1,8 +1,8 @@
 /**
  * Module dependencies.
  */
-//var auth = require('./controllers/auth');
-//var chat = require('./controllers/chat');
+var auth = require('./controllers/auth');
+var chat = require('./controllers/chat');
 
 exports = module.exports = function(app) {
   //homepage
@@ -10,17 +10,13 @@ exports = module.exports = function(app) {
     res.render('index');
   });
 
-  //auth
-  //app.all('*', auth.auth);
-  //app.use(auth.prefilter)
-
   //register,login,logout
-  // app.get("/login", auth.login);
-  // app.post('/login', auth.login);
-  // app.get("/logout", auth.logout);
+  app.get("/login", auth.login);
+  app.post('/login', auth.login);
+  app.get("/logout", auth.logout);
 
 
   //chat 
-  // app.get("/chat", auth.checkLogin, chat.index);
+  app.get("/chat", chat.index);
   //app.resource('chat', require('./controllers/chat'));
 };
