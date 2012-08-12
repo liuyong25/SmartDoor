@@ -62,7 +62,6 @@ switch(app.get('env')){
     break;
 }
 
-
 //routes & url mapping
 require('./routes')(app);
 
@@ -73,6 +72,7 @@ var io = require('socket.io').listen(server,{
   'browser client minification': true
 });
 var chatServer = require('./controllers/chat').init(io, app, sessionStore);
+var remoteServer = require('./controllers/remote').init(io, app, sessionStore);
 
 server.listen(app.get('port'), function(){
   console.log("%s listening on port %d in %s mode", config.name, app.get('port'), app.settings.env);

@@ -33,7 +33,6 @@ exports.init = function(io, app, sessionStore){
       })
   });
 
-  var userList = {};
   chatServer.on('connection', function (client) {
     //用户登录,保存信息
     var username = client.handshake.session.user.username;

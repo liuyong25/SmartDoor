@@ -1,0 +1,58 @@
+extends layout
+
+block append content
+  .container-fluid#remoteControl
+    //已连接的客户端区域
+    .row-fluid
+      .span2
+        .ul.nav.nav-list.well#clientlist(data-spy="scroll")
+          li.nav-header 已连接的客户端(0)
+
+      //客户端管理区域
+      .span9(data-spy="scroll")
+        .tabbable
+          //标签页头
+          ul.nav.nav-tabs
+            li.active: a(href="#fileList",data-toggle="tab") 文件浏览器
+            li: a(href="#other",data-toggle="tab") 其他
+
+          .tab-content
+            //标签页-文件管理
+            .tab-pane.active#filebrowser
+              //路径
+              ul.breadcrumb
+                li 当前路径：
+                li
+                  a(href="#") c:
+                  span.divider /
+                li
+                  a(href="#") users
+                  span.divider /
+
+              //文件列表
+              table.table#filelist
+                thead
+                  tr
+                    th(style="width:10px;") #
+                    th 文件名
+                    th 扩展名
+                    th 大小
+                    th 修改日期
+                tbody
+                  tr#goParent
+                    td: i.icon-arrow-up
+                    td(colspan="4") [..]
+                  tr
+                    td 
+                    td [client]
+                    td 
+                    td <文件夹>
+                    td 12-08-03 13:00
+
+            //标签页-其他
+            .tab-pane#other
+              | xxx
+
+block append js
+  script(src="/socket.io/socket.io.js")
+  script(src='/js/client.js')
